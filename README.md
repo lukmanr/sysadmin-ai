@@ -279,7 +279,7 @@ sysadmin-ai> config
 - **Auto Confirm**: Automatically confirm safe commands
 - **Log Commands**: Log all executed commands
 - **Web Search**: Enable web search for answers (default: ON)
-- **Model**: Claude model to use (default: claude-3-5-sonnet-latest)
+- **Model**: Claude model to use (default: claude-haiku-4-5-20251001)
 - **Timeout**: Command execution timeout in seconds
 - **Web Search Max Uses**: Maximum web searches Claude can perform per request (1-10)
 

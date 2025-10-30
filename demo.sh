@@ -92,7 +92,7 @@ import json
 
 # Create a test config
 config = {
-    'model': 'claude-3-5-sonnet-latest',
+    'model': 'claude-4-5-haiku-latest',
     'max_tokens': 1000,
     'auto_confirm': False,
     'log_commands': True,
