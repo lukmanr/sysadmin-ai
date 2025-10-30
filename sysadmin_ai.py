@@ -50,7 +50,7 @@ except ImportError:
     CRYPTO_AVAILABLE = False
 
 # Version info
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 TOOL_NAME = "SysAdmin AI"
 
 # Configuration

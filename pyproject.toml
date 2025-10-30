@@ -1,6 +1,6 @@
 [project]
 name = "sysadmin-ai"
-version = "1.0.0"
+version = "1.0.1"
 description = "A powerful command-line tool that enables Unix/Linux system administration through natural language commands, powered by Claude AI"
 readme = "README.md"
 requires-python = ">=3.7"
