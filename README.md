@@ -1,5 +1,9 @@
 # SysAdmin AI 🤖⚡
 
+[![PyPI version](https://badge.fury.io/py/sysadmin-ai.svg)](https://badge.fury.io/py/sysadmin-ai)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A powerful command-line tool that enables Unix/Linux system administration through natural language commands, powered by Claude AI.
 
 ## Features ✨
@@ -24,13 +28,33 @@ A powerful command-line tool that enables Unix/Linux system administration throu
 
 ### Installation
 
-#### Option 1: Install with uv (Recommended - Fast!)
+#### Option 1: Install from PyPI (Recommended - Easiest!)
+
+The fastest way to get started is to install directly from PyPI:
+
+```bash
+# Using pip
+pip install sysadmin-ai
+
+# Or using uv (10-100x faster!)
+uv pip install sysadmin-ai
+```
+
+After installation, the `ai` and `sysadmin-ai` commands will be available globally.
+
+**Don't have uv?** Install it first for blazingly fast package management:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+#### Option 2: Install from Source with uv (Fast Development Setup)
 
 [uv](https://github.com/astral-sh/uv) is a blazingly fast Python package installer and resolver written in Rust. It's 10-100x faster than pip!
 
-1. **Navigate to the sysadmin directory:**
+1. **Clone the repository:**
    ```bash
-   cd sysadmin/
+   git clone https://github.com/lukmanr/sysadmin-ai.git
+   cd sysadmin-ai/
    ```
 
 2. **Run the uv installer:**
@@ -54,11 +78,12 @@ A powerful command-line tool that enables Unix/Linux system administration throu
 
    📖 **For detailed uv installation instructions and troubleshooting, see [UV_INSTALL.md](UV_INSTALL.md)**
 
-#### Option 2: Install with pip (Traditional)
+#### Option 3: Install from Source with pip (Traditional)
 
-1. **Navigate to the sysadmin directory:**
+1. **Clone the repository:**
    ```bash
-   cd sysadmin/
+   git clone https://github.com/lukmanr/sysadmin-ai.git
+   cd sysadmin-ai/
    ```
 
 2. **Run the automated installer:**
@@ -94,29 +119,37 @@ A powerful command-line tool that enables Unix/Linux system administration throu
    ai "show disk usage"
    ```
 
-#### Option 3: Install as a Python package with uv
+### Setting Up Your API Key
 
-If you prefer to install sysadmin-ai as a Python package:
+After installation (any method), configure your Anthropic API key:
 
 ```bash
-# Install uv if you don't have it
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Option 1: Environment variable (recommended)
+export ANTHROPIC_API_KEY="your_api_key_here"
 
-# Install sysadmin-ai
-uv pip install .
+# Option 2: Create a .env.secrets file in your working directory
+echo 'ANTHROPIC_API_KEY=your_api_key_here' > ~/.sysadmin-ai-secrets
 
-# Or install in a virtual environment
-uv venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-uv pip install .
+# Option 3: The tool will prompt you interactively if no key is found
 ```
 
-After installation, you can use the `ai` or `sysadmin-ai` commands directly from anywhere.
+### Quick Test
+
+```bash
+# Get help
+ai --help
+
+# Try a simple command
+ai "show disk usage"
+
+# Start interactive mode
+ai --interactive
+```
 
 ## Usage Examples 📝
 
-### Easy Access with `ai` Alias
-After installation, you can use the short `ai` command:
+### Easy Access with `ai` Command
+After installation from PyPI or running the install scripts, you can use the short `ai` command:
 
 ```bash
 # Interactive mode
@@ -422,14 +455,24 @@ alias ai='/path/to/sysadmin_ai.py'
 
 ### Common Issues
 
-**Slow pip installation?**
-Try using uv instead! It's 10-100x faster:
+**Can't find the `ai` command after installation?**
 ```bash
-# Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Make sure your Python scripts directory is in PATH
+# For pip user install:
+export PATH="$HOME/.local/bin:$PATH"
 
-# Then use the uv installer
-./install-uv.sh
+# For system install, restart your terminal
+```
+
+**Slow pip installation?**
+Use uv instead! It's 10-100x faster:
+```bash
+# Install with uv
+uv pip install sysadmin-ai
+
+# Or install uv first, then install the package
+curl -LsSf https://astral.sh/uv/install.sh | sh
+uv pip install sysadmin-ai
 ```
 
 **pip3 not found during installation**
