@@ -557,7 +557,6 @@ For issues, feature requests, or questions:
 - Check command logs in `~/.sysadmin-ai.log`
 - Ensure your Anthropic API key is valid and has sufficient credits
 - Verify network connectivity to api.anthropic.com
-
 ---
 
 **Disclaimer**: This tool executes system commands based on AI interpretation of natural language. Always verify commands before execution and use appropriate safety measures in production environments.
@@ -570,3 +569,7 @@ Try running:
 ```
 
 This will show you the tool's capabilities and help you get started!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
