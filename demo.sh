@@ -26,41 +26,41 @@ fi
 
 echo "1. Showing help:"
 echo "=================="
-./sysadmin-ai.py --help
+./sysadmin_ai.py --help
 echo ""
 
 echo "2. Showing version:"
 echo "==================="
-./sysadmin-ai.py --version
+./sysadmin_ai.py --version
 echo ""
 
 echo "3. Example commands and questions you could run:"
 echo "================================================"
 cat << 'EOF'
 # Interactive mode:
-./sysadmin-ai.py --interactive
+./sysadmin_ai.py --interactive
 
 # Single commands:
-./sysadmin-ai.py "show disk usage"
-./sysadmin-ai.py "find large files in /tmp"
-./sysadmin-ai.py "check system memory"
+./sysadmin_ai.py "show disk usage"
+./sysadmin_ai.py "find large files in /tmp"
+./sysadmin_ai.py "check system memory"
 
 # Questions (NEW Q&A feature):
-./sysadmin-ai.py "what is uvx and where does it install files?"
-./sysadmin-ai.py "how do I configure SSH key authentication?"
-./sysadmin-ai.py "what's the difference between systemctl and service?"
+./sysadmin_ai.py "what is uvx and where does it install files?"
+./sysadmin_ai.py "how do I configure SSH key authentication?"
+./sysadmin_ai.py "what's the difference between systemctl and service?"
 
 # With safety options:
-./sysadmin-ai.py --safe-mode "clean temporary files"
-./sysadmin-ai.py --auto-confirm "list running processes"
+./sysadmin_ai.py --safe-mode "clean temporary files"
+./sysadmin_ai.py --auto-confirm "list running processes"
 
 # All processed with intelligent intent detection - no special syntax needed!
 
 # Configuration:
-./sysadmin-ai.py --config
+./sysadmin_ai.py --config
 
 # Create embedded version:
-./sysadmin-ai.py --embed-key sysadmin-ai-embedded.py
+./sysadmin_ai.py --embed-key sysadmin-ai-embedded.py
 EOF
 
 echo ""
@@ -113,7 +113,7 @@ echo "✅ Demo complete!"
 echo ""
 echo "Next steps:"
 echo "1. Set your ANTHROPIC_API_KEY"
-echo "2. Run: ./sysadmin-ai.py --interactive"
+echo "2. Run: ./sysadmin_ai.py --interactive"
 echo "3. Try commands like 'show disk usage'"
 echo "4. Try questions like 'what is docker?'"
 echo "5. Claude automatically determines your intent"

@@ -147,7 +147,7 @@ echo "✅ Dependencies installed"
 # Make scripts executable (non-fatal if they fail)
 echo ""
 echo "🔧 Setting up executables..."
-chmod +x sysadmin-ai.py 2>/dev/null || echo "⚠️  Note: Could not set executable permission on sysadmin-ai.py (may already be set or no write permission)"
+chmod +x sysadmin_ai.py 2>/dev/null || echo "⚠️  Note: Could not set executable permission on sysadmin_ai.py (may already be set or no write permission)"
 chmod +x package-sysadmin-ai.py 2>/dev/null || echo "⚠️  Note: Could not set executable permission on package-sysadmin-ai.py (may already be set or no write permission)"
 chmod +x demo.sh 2>/dev/null || echo "⚠️  Note: Could not set executable permission on demo.sh (may already be set or no write permission)"
 chmod +x setup-alias.sh 2>/dev/null || echo "⚠️  Note: Could not set executable permission on setup-alias.sh (may already be set or no write permission)"
@@ -157,7 +157,7 @@ echo "✅ Executable permissions configured"
 # Detect OS and show information (non-fatal if it fails)
 echo ""
 echo "🔍 Detecting system..."
-if OS_DETECTED=$(./sysadmin-ai.py --show-os 2>/dev/null | grep "Detected OS:" | cut -d: -f2 | xargs); then
+if OS_DETECTED=$(./sysadmin_ai.py --show-os 2>/dev/null | grep "Detected OS:" | cut -d: -f2 | xargs); then
     echo "✅ Detected: $OS_DETECTED"
 else
     echo "⚠️  Note: Could not detect OS automatically (this is normal if dependencies aren't installed yet)"
@@ -174,12 +174,12 @@ fi
 
 # Create additional symlink in user's local bin if it exists (for backward compatibility)
 if [ -d "$HOME/.local/bin" ]; then
-    if ln -sf "$(pwd)/sysadmin-ai.py" "$HOME/.local/bin/sysadmin-ai" 2>/dev/null; then
+    if ln -sf "$(pwd)/sysadmin_ai.py" "$HOME/.local/bin/sysadmin-ai" 2>/dev/null; then
         echo "✅ Created symlink: $HOME/.local/bin/sysadmin-ai"
     else
         echo "⚠️  Note: Could not create symlink in $HOME/.local/bin (no write permission)"
         echo "   You can create it manually with:"
-        echo "   ln -sf '$(pwd)/sysadmin-ai.py' '$HOME/.local/bin/sysadmin-ai'"
+        echo "   ln -sf '$(pwd)/sysadmin_ai.py' '$HOME/.local/bin/sysadmin-ai'"
     fi
     
     # Check if ~/.local/bin is in PATH
@@ -209,8 +209,8 @@ echo "   ai --interactive"
 echo "   ai \"check system memory\""
 echo ""
 echo "4. Or run directly:"
-echo "   ./sysadmin-ai.py --help"
-echo "   ./sysadmin-ai.py --interactive"
+echo "   ./sysadmin_ai.py --help"
+echo "   ./sysadmin_ai.py --interactive"
 echo ""
 echo "5. Try the demo:"
 echo "   ./demo.sh"

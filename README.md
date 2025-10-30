@@ -24,6 +24,38 @@ A powerful command-line tool that enables Unix/Linux system administration throu
 
 ### Installation
 
+#### Option 1: Install with uv (Recommended - Fast!)
+
+[uv](https://github.com/astral-sh/uv) is a blazingly fast Python package installer and resolver written in Rust. It's 10-100x faster than pip!
+
+1. **Navigate to the sysadmin directory:**
+   ```bash
+   cd sysadmin/
+   ```
+
+2. **Run the uv installer:**
+   ```bash
+   ./install-uv.sh
+   ```
+   
+   This will:
+   - Install uv automatically if not present (macOS/Linux)
+   - Check for Python 3
+   - Install Python dependencies **much faster** than pip
+   - Detect your operating system for optimal command generation
+   - Set up the `ai` alias for easy access
+   - Create symlinks and configure your shell
+
+   **Why uv?**
+   - ⚡ **10-100x faster** than pip for dependency resolution and installation
+   - 🦀 Written in Rust for maximum performance
+   - 🔒 Drop-in replacement for pip with the same interface
+   - 📦 Better dependency resolution
+
+   📖 **For detailed uv installation instructions and troubleshooting, see [UV_INSTALL.md](UV_INSTALL.md)**
+
+#### Option 2: Install with pip (Traditional)
+
 1. **Navigate to the sysadmin directory:**
    ```bash
    cd sysadmin/
@@ -62,6 +94,25 @@ A powerful command-line tool that enables Unix/Linux system administration throu
    ai "show disk usage"
    ```
 
+#### Option 3: Install as a Python package with uv
+
+If you prefer to install sysadmin-ai as a Python package:
+
+```bash
+# Install uv if you don't have it
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install sysadmin-ai
+uv pip install .
+
+# Or install in a virtual environment
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install .
+```
+
+After installation, you can use the `ai` or `sysadmin-ai` commands directly from anywhere.
+
 ## Usage Examples 📝
 
 ### Easy Access with `ai` Alias
@@ -86,15 +137,15 @@ ai --interactive
 
 Then type natural language commands:
 ```
-sysadmin-ai> show me disk usage
-sysadmin-ai> find large files in /var/log
-sysadmin-ai> backup my home directory
-sysadmin-ai> check which processes are using the most CPU
-sysadmin-ai> update system packages
-sysadmin-ai> restart apache service
-sysadmin-ai> create a new user named john
-sysadmin-ai> add user to sudo group
-sysadmin-ai> check system memory usage
+sysadmin_ai> show me disk usage
+sysadmin_ai> find large files in /var/log
+sysadmin_ai> backup my home directory
+sysadmin_ai> check which processes are using the most CPU
+sysadmin_ai> update system packages
+sysadmin_ai> restart apache service
+sysadmin_ai> create a new user named john
+sysadmin_ai> add user to sudo group
+sysadmin_ai> check system memory usage
 ```
 
 ### Single Command Mode
@@ -134,6 +185,13 @@ ai --target-os linux-centos "update packages"
 - **Arch Linux**: Uses `free`, `systemctl`, `pacman`
 - **FreeBSD**: Uses `top`, `service`, `pkg`
 - **Generic Unix/Linux**: Fallback commands
+
+### Direct Execution
+```bash
+./sysadmin_ai.py --help
+./sysadmin_ai.py --interactive
+./sysadmin_ai.py "show disk usage"
+```
 
 ### With Safety Options
 ```bash
@@ -205,7 +263,7 @@ ANTHROPIC_API_KEY=your_api_key_here
 For deploying to remote servers where environment setup is complex:
 
 ```bash
-./sysadmin-ai.py --embed-key sysadmin-ai-embedded.py
+./sysadmin_ai.py --embed-key sysadmin-ai-embedded.py
 ```
 
 This creates a version with an encrypted, embedded API key. You'll need to enter a passphrase when running it.
@@ -248,7 +306,7 @@ Prevents execution of potentially dangerous commands:
 - Permission changes to system files
 
 ```bash
-./sysadmin-ai.py --safe-mode --interactive
+./sysadmin_ai.py --safe-mode --interactive
 ```
 
 ### Command Confirmation
@@ -271,7 +329,7 @@ Built-in patterns detect dangerous operations:
 Run `config` in interactive mode to modify settings:
 
 ```
-sysadmin-ai> config
+sysadmin_ai> config
 ```
 
 ### Settings Available
@@ -342,7 +400,8 @@ All executed commands are logged to `~/.sysadmin-ai.log` with timestamps.
 
 The directory includes several helper scripts:
 
-- **`install.sh`** - Automated installation with dependency management and alias setup
+- **`install-uv.sh`** - Fast installation using uv (recommended, 10-100x faster than pip)
+- **`install.sh`** - Traditional installation with pip and dependency management
 - **`setup-alias.sh`** - Set up the `ai` alias for easy command access
 - **`demo.sh`** - Demonstration script showing tool capabilities
 - **`package-sysadmin-ai.py`** - Create portable/standalone distributions
@@ -356,12 +415,22 @@ If you need to set up the alias manually:
 ./setup-alias.sh
 
 # Or add manually to your shell config (~/.bashrc, ~/.zshrc, etc.)
-alias ai='/path/to/sysadmin-ai.py'
+alias ai='/path/to/sysadmin_ai.py'
 ```
 
 ## Troubleshooting 🔍
 
 ### Common Issues
+
+**Slow pip installation?**
+Try using uv instead! It's 10-100x faster:
+```bash
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Then use the uv installer
+./install-uv.sh
+```
 
 **pip3 not found during installation**
 The installer will provide specific commands for your OS. Common solutions:
@@ -380,6 +449,13 @@ sudo dnf install python3-pip
 
 # Arch Linux
 sudo pacman -S python-pip
+```
+
+**uv not found after installation**
+If uv was just installed, you may need to restart your shell or source the environment:
+```bash
+source $HOME/.cargo/env
+# Or restart your terminal
 ```
 
 **ImportError: No module named 'requests'**
@@ -404,7 +480,7 @@ sudo pip3 install -r requirements.txt
 
 **Permission Denied**
 ```bash
-chmod +x sysadmin-ai.py
+chmod +x sysadmin_ai.py
 ```
 
 **Commands Not Working**
@@ -451,7 +527,7 @@ Test the tool safely:
 
 ```bash
 # Enable safe mode
-./sysadmin-ai.py --safe-mode --interactive
+./sysadmin_ai.py --safe-mode --interactive
 
 # Test with harmless commands
 "show current directory"

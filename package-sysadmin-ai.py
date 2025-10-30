@@ -62,7 +62,7 @@ def create_standalone_script(output_file: str, embed_key: bool = False):
             return False
         
         # Read original script
-        with open('sysadmin-ai.py', 'r') as f:
+        with open('sysadmin_ai.py', 'r') as f:
             original_content = f.read()
         
         # Create standalone version
@@ -122,7 +122,7 @@ def create_portable_package(output_dir: str):
     output_path.mkdir(exist_ok=True)
     
     # Copy main script
-    shutil.copy('sysadmin-ai.py', output_path / 'sysadmin-ai.py')
+    shutil.copy('sysadmin_ai.py', output_path / 'sysadmin_ai.py')
     
     # Copy requirements
     shutil.copy('requirements.txt', output_path / 'requirements.txt')
@@ -146,19 +146,19 @@ echo "Installing Python dependencies..."
 python3 -m pip install -r requirements.txt --user
 
 # Make script executable
-chmod +x sysadmin-ai.py
+chmod +x sysadmin_ai.py
 
 # Create symlink in user's local bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
-    ln -sf "$(pwd)/sysadmin-ai.py" "$HOME/.local/bin/sysadmin-ai"
+    ln -sf "$(pwd)/sysadmin_ai.py" "$HOME/.local/bin/sysadmin-ai"
     echo "Created symlink: $HOME/.local/bin/sysadmin-ai"
 fi
 
 echo "Installation complete!"
 echo ""
 echo "Usage:"
-echo "  ./sysadmin-ai.py --help"
-echo "  ./sysadmin-ai.py --interactive"
+echo "  ./sysadmin_ai.py --help"
+echo "  ./sysadmin_ai.py --interactive"
 echo ""
 echo "If ~/.local/bin is in your PATH, you can also run:"
 echo "  sysadmin-ai --help"
@@ -196,24 +196,24 @@ If you prefer to install manually:
 pip install -r requirements.txt
 
 # Make executable
-chmod +x sysadmin-ai.py
+chmod +x sysadmin_ai.py
 ```
 
 ## Usage
 
 Interactive mode:
 ```bash
-./sysadmin-ai.py --interactive
+./sysadmin_ai.py --interactive
 ```
 
 Single command:
 ```bash
-./sysadmin-ai.py "show disk usage"
+./sysadmin_ai.py "show disk usage"
 ```
 
 Get help:
 ```bash
-./sysadmin-ai.py --help
+./sysadmin_ai.py --help
 ```
 
 ## API Key Setup

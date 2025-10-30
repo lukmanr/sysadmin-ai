@@ -5,14 +5,14 @@
 # set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCRIPT_PATH="$SCRIPT_DIR/sysadmin-ai.py"
+SCRIPT_PATH="$SCRIPT_DIR/sysadmin_ai.py"
 
 echo "🔧 Setting up SysAdmin AI alias..."
 echo ""
 
 # Check if the script exists
 if [ ! -f "$SCRIPT_PATH" ]; then
-    echo "❌ Error: sysadmin-ai.py not found in $SCRIPT_DIR"
+    echo "❌ Error: sysadmin_ai.py not found in $SCRIPT_DIR"
     exit 1
 fi
 
