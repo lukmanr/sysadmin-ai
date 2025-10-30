@@ -1,0 +1,496 @@
+# SysAdmin AI 🤖⚡
+
+A powerful command-line tool that enables Unix/Linux system administration through natural language commands, powered by Claude AI.
+
+## Features ✨
+
+- **Natural Language Interface**: Describe what you want to do in plain English
+- **Smart Command Translation**: Leverages Claude AI to convert natural language to appropriate bash commands
+- **Question & Answer Mode**: Ask questions about Unix/Linux systems and get detailed explanations
+- **Web Search Integration**: Automatically searches the web for up-to-date information when answering questions
+- **Intelligent Mode Detection**: Automatically determines whether you're asking a question or requesting commands
+- **Safety First**: Built-in dangerous command detection and safe mode
+- **Multiple Deployment Options**: Standalone, portable, or embedded API key versions
+- **Interactive & Script Modes**: Use interactively or in automation scripts
+- **Command History & Logging**: Track and log all executed commands
+- **Configurable Settings**: Customize behavior to match your workflow
+
+## Quick Start 🚀
+
+### Prerequisites
+
+- Python 3.7 or higher
+- Anthropic API key
+
+### Installation
+
+1. **Navigate to the sysadmin directory:**
+   ```bash
+   cd sysadmin/
+   ```
+
+2. **Run the automated installer:**
+   ```bash
+   ./install.sh
+   ```
+   
+   This will:
+   - Check for Python 3 and pip (with helpful installation guidance if missing)
+   - Install Python dependencies with error handling and troubleshooting tips
+   - Detect your operating system for optimal command generation
+   - Set up the `ai` alias for easy access
+   - Create symlinks and configure your shell
+   - Handle permission issues gracefully (script won't fail on chmod/symlink errors)
+
+   **Multi-User Friendly**: The installer can be run by multiple users from the same directory. Each user gets their own alias and symlink configuration without affecting others.
+
+   **Note**: If pip is missing, the installer will provide specific commands for your operating system to install it.
+
+3. **Set up your API key:**
+   ```bash
+   export ANTHROPIC_API_KEY="your_api_key_here"
+   ```
+   
+   Or create a `.env.secrets` file:
+   ```
+   ANTHROPIC_API_KEY=your_api_key_here
+   ```
+
+4. **Test the installation:**
+   ```bash
+   ai --help
+   ai "show disk usage"
+   ```
+
+## Usage Examples 📝
+
+### Easy Access with `ai` Alias
+After installation, you can use the short `ai` command:
+
+```bash
+# Interactive mode
+ai --interactive
+
+# Single commands
+ai "show disk usage"
+ai "check system memory"
+ai "find large files in /tmp"
+ai "list running services"
+ai "show network connections"
+```
+
+### Interactive Mode
+```bash
+ai --interactive
+```
+
+Then type natural language commands:
+```
+sysadmin-ai> show me disk usage
+sysadmin-ai> find large files in /var/log
+sysadmin-ai> backup my home directory
+sysadmin-ai> check which processes are using the most CPU
+sysadmin-ai> update system packages
+sysadmin-ai> restart apache service
+sysadmin-ai> create a new user named john
+sysadmin-ai> add user to sudo group
+sysadmin-ai> check system memory usage
+```
+
+### Single Command Mode
+```bash
+# Commands
+ai "show disk usage"
+ai "find files larger than 100MB in /tmp" 
+ai "check system memory usage"
+ai "list all running services"
+ai "show network connections"
+
+# Questions
+ai "what is uvx and where does it install files?"
+ai "how do I configure SSH key authentication?"
+ai "what's the difference between systemctl and service?"
+ai "where are nginx configuration files located?"
+ai "explain how Linux file permissions work"
+```
+
+### OS-Specific Command Generation
+The tool automatically detects your operating system and generates appropriate commands:
+
+```bash
+# Check detected OS
+ai --show-os
+
+# Override OS detection (useful for remote administration)
+ai --target-os linux-ubuntu "check system memory"
+ai --target-os macos "list running services"
+ai --target-os linux-centos "update packages"
+```
+
+**Supported Systems:**
+- **macOS**: Uses `vm_stat`, `launchctl`, `brew`
+- **Ubuntu/Debian**: Uses `free`, `systemctl`, `apt`
+- **CentOS/RHEL**: Uses `free`, `systemctl`, `yum`
+- **Arch Linux**: Uses `free`, `systemctl`, `pacman`
+- **FreeBSD**: Uses `top`, `service`, `pkg`
+- **Generic Unix/Linux**: Fallback commands
+
+### With Safety Options
+```bash
+ai --safe-mode "clean up temporary files"
+ai --auto-confirm "show running services"
+```
+
+## Question & Answer Mode 🤔
+
+The tool now intelligently detects when you're asking a question and provides detailed explanations with web search integration.
+
+### Intelligent Intent Detection
+Claude automatically determines whether you're asking a question or requesting commands - no special syntax needed! Just talk naturally and Claude will:
+- **Provide explanations** for questions about concepts, tools, and configurations
+- **Generate commands** for actionable requests like "show disk usage"
+
+### Web Search Integration
+Claude can search the web for current information when answering questions:
+```bash
+ai "what is the latest version of Docker?"
+ai "how to install Node.js on Ubuntu 22.04?"
+ai "what are the best practices for SSH security?"
+```
+
+### Configuration Options
+```bash
+# Configure settings (including web search)
+ai --config
+
+# Disable web search for answers
+ai --disable-web-search "what is systemd?"
+```
+
+### Natural Language Examples
+
+Claude automatically determines your intent - no special syntax needed:
+
+**Questions** (Claude provides detailed explanations):
+- "what is uvx and where does it install files?"
+- "how do I configure SSH key authentication?"
+- "what's the difference between apt and snap?"
+- "where are log files typically stored?"
+- "explain how cron jobs work"
+
+**Commands** (Claude generates executable bash):
+- "install docker" → `brew install docker` (macOS)
+- "check disk usage" → `df -h`
+- "find large files" → `find . -type f -size +100M`
+- "restart nginx service" → `sudo systemctl restart nginx`
+- "show running processes" → `ps aux`
+
+## API Key Management 🔐
+
+The tool supports multiple ways to provide your Anthropic API key:
+
+### 1. Environment Variable (Recommended)
+```bash
+export ANTHROPIC_API_KEY="your_api_key_here"
+./sysadmin-ai.py --interactive
+```
+
+### 2. Local .env.secrets File
+Create a `.env.secrets` file in the sysadmin directory:
+```
+ANTHROPIC_API_KEY=your_api_key_here
+```
+
+### 3. Embedded Key (For Deployment)
+For deploying to remote servers where environment setup is complex:
+
+```bash
+./sysadmin-ai.py --embed-key sysadmin-ai-embedded.py
+```
+
+This creates a version with an encrypted, embedded API key. You'll need to enter a passphrase when running it.
+
+### 4. Interactive Prompt
+If no key is found, the tool will prompt you to enter it securely.
+
+## Deployment Options 📦
+
+### Portable Package
+Create a self-contained package for easy deployment:
+
+```bash
+./package-sysadmin-ai.py --portable sysadmin-ai-portable
+cd sysadmin-ai-portable
+./install.sh
+```
+
+### Standalone Script
+Create a single file with bundled dependencies:
+
+```bash
+./package-sysadmin-ai.py --standalone sysadmin-ai-standalone.py
+```
+
+### Complete Package
+Create both versions:
+
+```bash
+./package-sysadmin-ai.py --all
+```
+
+## Security Features 🛡️
+
+### Safe Mode
+Prevents execution of potentially dangerous commands:
+- File system destruction (`rm -rf /`)
+- Disk operations (`dd`, `mkfs`, `fdisk`)
+- System shutdown commands
+- Permission changes to system files
+
+```bash
+./sysadmin-ai.py --safe-mode --interactive
+```
+
+### Command Confirmation
+Before executing commands, the tool shows:
+- All commands to be executed
+- Danger warnings for risky operations
+- Options to edit, cancel, or proceed
+
+### Command Validation
+Built-in patterns detect dangerous operations:
+- Root filesystem operations
+- Bulk deletion commands
+- System configuration changes
+- Hardware manipulation commands
+
+
+## Configuration ⚙️
+
+### Interactive Configuration
+Run `config` in interactive mode to modify settings:
+
+```
+sysadmin-ai> config
+```
+
+### Settings Available
+- **Safe Mode**: Prevent dangerous command execution
+- **Auto Confirm**: Automatically confirm safe commands
+- **Log Commands**: Log all executed commands
+- **Web Search**: Enable web search for answers (default: ON)
+- **Model**: Claude model to use (default: claude-3-5-sonnet-latest)
+- **Timeout**: Command execution timeout in seconds
+- **Web Search Max Uses**: Maximum web searches Claude can perform per request (1-10)
+
+### Configuration File
+Settings are stored in `~/.sysadmin-ai.json`:
+
+```json
+{
+  "model": "claude-haiku-4-5-20251001",
+  "max_tokens": 1500,
+  "auto_confirm": false,
+  "log_commands": true,
+  "safe_mode": true,
+  "command_timeout": 300,
+  "enable_web_search": true,
+  "web_search_max_uses": 5,
+}
+```
+
+## Common System Administration Tasks 💡
+
+### Mixed Examples (Claude Determines Intent Automatically)
+| Natural Language Input | Claude's Response |
+|------------------------|-------------------|
+| "show disk usage" | **Commands**: `df -h` |
+| "what is uvx and where does it install files?" | **Explanation**: Detailed description of uvx tool, installation locations, and usage patterns |
+| "find large files in /var/log" | **Commands**: `find /var/log -type f -size +100M -exec ls -lh {} \;` |
+| "how do SSH keys work?" | **Explanation**: SSH key authentication process, generation, security benefits |
+| "backup my home directory" | **Commands**: `tar -czf ~/backup-$(date +%Y%m%d).tar.gz ~` |
+| "what's the difference between systemctl and service?" | **Explanation**: Comparison of systemd vs traditional service management |
+| "check running processes" | **Commands**: `ps aux` |
+| "where are nginx config files located?" | **Explanation**: Config file locations across different distributions |
+| "restart apache service" | **Commands**: `sudo systemctl restart apache2` |
+| "explain Linux file permissions" | **Explanation**: Permission system, chmod, chown, and practical examples |
+| "show network connections" | **Commands**: `netstat -tuln` or `ss -tuln` |
+| "what does the ps command do?" | **Explanation**: Process listing functionality and common options |
+| "list all services" | **Commands**: `systemctl list-units --type=service` |
+| "how do I set up a cron job?" | **Explanation**: Cron syntax, examples, and best practices |
+| "update package lists" | **Commands**: `sudo apt update` (Debian/Ubuntu) or `brew update` (macOS) |
+| "what is Docker and how does it work?" | **Explanation**: Containerization concepts and Docker basics |
+
+## Advanced Features 🔧
+
+### Command History
+View recent commands:
+```
+sysadmin-ai> history
+```
+
+### Command Editing
+When confirming commands, use 'e' to edit them before execution.
+
+### Detailed Command Information
+Use 's' during confirmation to see detailed information about commands.
+
+### Logging
+All executed commands are logged to `~/.sysadmin-ai.log` with timestamps.
+
+## Installation Helper Scripts
+
+The directory includes several helper scripts:
+
+- **`install.sh`** - Automated installation with dependency management and alias setup
+- **`setup-alias.sh`** - Set up the `ai` alias for easy command access
+- **`demo.sh`** - Demonstration script showing tool capabilities
+- **`package-sysadmin-ai.py`** - Create portable/standalone distributions
+
+### Manual Alias Setup
+
+If you need to set up the alias manually:
+
+```bash
+# Run the alias setup script
+./setup-alias.sh
+
+# Or add manually to your shell config (~/.bashrc, ~/.zshrc, etc.)
+alias ai='/path/to/sysadmin-ai.py'
+```
+
+## Troubleshooting 🔍
+
+### Common Issues
+
+**pip3 not found during installation**
+The installer will provide specific commands for your OS. Common solutions:
+```bash
+# macOS
+brew install python
+
+# Ubuntu/Debian
+sudo apt update && sudo apt install python3-pip
+
+# CentOS/RHEL
+sudo yum install python3-pip
+
+# Fedora
+sudo dnf install python3-pip
+
+# Arch Linux
+sudo pacman -S python-pip
+```
+
+**ImportError: No module named 'requests'**
+```bash
+pip install requests cryptography
+# or if pip3 is available
+pip3 install requests cryptography
+```
+
+**Permission errors during pip install**
+Try installing with user flag or system-wide:
+```bash
+pip3 install -r requirements.txt --user
+# or system-wide (requires sudo)
+sudo pip3 install -r requirements.txt
+```
+
+**API Key Not Found**
+- Check environment variable: `echo $ANTHROPIC_API_KEY`
+- Verify .env.secrets file exists and has correct format
+- Ensure no extra spaces or quotes in the key
+
+**Permission Denied**
+```bash
+chmod +x sysadmin-ai.py
+```
+
+**Commands Not Working**
+- Check if you're in safe mode (dangerous commands are blocked)
+- Verify the translated command makes sense  
+- Try being more specific in your natural language request
+- Check detected OS with `ai --show-os`
+
+**Alias not working after installation**
+```bash
+# Reload shell configuration
+source ~/.bashrc        # Linux
+source ~/.bash_profile  # macOS
+source ~/.zshrc         # If using zsh
+
+# Or start a new terminal session
+```
+
+### Debug Mode
+For troubleshooting API issues, you can check the raw API responses by modifying the code temporarily or using verbose logging.
+
+## Use Cases 🎯
+
+Perfect for:
+- **System Administrators** who want to work faster with natural language and get quick answers
+- **DevOps Engineers** managing multiple servers and environments
+- **Developers** who need occasional system administration tasks and explanations
+- **Students** learning Unix/Linux system administration with interactive Q&A
+- **Technical Support** answering user questions about system configurations
+- **Documentation** creating explanations for system administration procedures
+- **Remote Server Management** with embedded API key deployment
+- **Automation Scripts** that need human-readable command descriptions
+- **Training and Education** with explanatory answers and examples
+
+## Development 🛠️
+
+### Requirements
+- Python 3.7+
+- requests >= 2.31.0
+- cryptography >= 41.0.0 (for embedded keys)
+
+### Testing
+Test the tool safely:
+
+```bash
+# Enable safe mode
+./sysadmin-ai.py --safe-mode --interactive
+
+# Test with harmless commands
+"show current directory"
+"list files in current directory"
+"show system date and time"
+```
+
+### Contributing
+- Improve command translation accuracy
+- Add more safety patterns
+- Enhance error handling
+- Add support for other AI models
+
+## Security Notice ⚠️
+
+- Always review commands before execution
+- Use safe mode in production environments
+- Keep your API key secure
+- Be cautious with embedded key deployments
+- Regularly review command logs
+- Test in non-production environments first
+
+## Support 💬
+
+For issues, feature requests, or questions:
+- Review the troubleshooting section
+- Check command logs in `~/.sysadmin-ai.log`
+- Ensure your Anthropic API key is valid and has sufficient credits
+- Verify network connectivity to api.anthropic.com
+
+---
+
+**Disclaimer**: This tool executes system commands based on AI interpretation of natural language. Always verify commands before execution and use appropriate safety measures in production environments.
+
+## Quick Demo
+
+Try running:
+```bash
+./demo.sh
+```
+
+This will show you the tool's capabilities and help you get started!
